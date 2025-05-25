@@ -274,6 +274,7 @@ const checkPincodeDelivery = (pincode:string) => {
         subtotal: subtotal,
         tax_amount: 0,
         shipping_cost: getShippingCost(),
+        shipping_method: formData.shippingMethod,
         discount_amount: 0,
         total_amount: totalAmount,
         currency: 'INR',
@@ -344,9 +345,12 @@ const checkPincodeDelivery = (pincode:string) => {
   }, 0);
 
   // Shipping cost based on pincode
-const getShippingCost = () => {
-  return pincodeDeliveryInfo.isValid ? pincodeDeliveryInfo.cost : 0;
-};
+  const getShippingCost = () => {
+    const baseCost = pincodeDeliveryInfo.isValid ? pincodeDeliveryInfo.cost : 0;
+    const expressCost = formData.shippingMethod === 'express' ? 150 : 0;
+    return baseCost + expressCost;
+  };
+  
 
 
   // Total amount
@@ -691,6 +695,60 @@ const handleCashOnDelivery = async () => {
                   )}
                 </div>
               </div>
+              <div className="mt-6">
+                <label className="block text-sm font-medium text-theme1-primary mb-3">Delivery Options</label>
+                <div className="space-y-3">
+                  <label className={`flex items-center justify-between p-4 border rounded-md cursor-pointer transition-colors ${formData.shippingMethod === 'standard' ? 'border-theme1-primary bg-theme1-primary/10' : 'border-theme1-primary/20'}`}>
+                    <div className="flex items-center">
+                      <input
+                        type="radio"
+                        name="shippingMethod"
+                        value="standard"
+                        checked={formData.shippingMethod === 'standard'}
+                        onChange={handleInputChange}
+                        className="mr-3"
+                      />
+                      <div>
+                        <span className="font-medium text-theme1-primary">Standard Delivery</span>
+                        <p className="text-sm text-theme1-secondary">Within 3 days</p>
+                      </div>
+                    </div>
+                    <span className="text-theme1-primary font-medium">
+                      {pincodeDeliveryInfo.isValid ? `₹${pincodeDeliveryInfo.cost}` : 'Free*'}
+                    </span>
+                  </label>
+                  
+                  <label className={`flex items-center justify-between p-4 border rounded-md cursor-pointer transition-colors ${formData.shippingMethod === 'express' ? 'border-theme1-primary bg-theme1-primary/10' : 'border-theme1-primary/20'}`}>
+                    <div className="flex items-center">
+                      <input
+                        type="radio"
+                        name="shippingMethod"
+                        value="express"
+                        checked={formData.shippingMethod === 'express'}
+                        onChange={handleInputChange}
+                        className="mr-3"
+                      />
+                      <div>
+                        <span className="font-medium text-theme1-primary flex items-center">
+                          Express Delivery
+                          <span className="ml-2 bg-theme1-primary text-white text-xs px-2 py-1 rounded-full">Fast</span>
+                        </span>
+                        <p className="text-sm text-theme1-secondary">Same Day delivery</p>
+                      </div>
+                    </div>
+                    <span className="text-theme1-primary font-medium">
+                      {pincodeDeliveryInfo.isValid ? `₹${pincodeDeliveryInfo.cost + 150}` : '+₹150'}
+                    </span>
+                  </label>
+                </div>
+                
+                {pincodeDeliveryInfo.isValid && (
+                  <p className="text-xs text-theme1-secondary mt-2">
+                    * Base delivery charge applies based on your pincode
+                  </p>
+                )}
+              </div>
+
               
               <div className="flex justify-between pt-4">
                 <button
@@ -905,7 +963,9 @@ const handleCashOnDelivery = async () => {
                       </span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-theme1-secondary">Delivery Charge</span>
+                      <span className="text-theme1-secondary">
+                        Delivery Charge {formData.shippingMethod === 'express' ? '(Express)' : '(Standard)'}
+                      </span>
                       <span className="text-theme1-secondary">
                         {pincodeDeliveryInfo.isValid ? 
                           `₹${getShippingCost().toLocaleString('en-IN')}` : 
