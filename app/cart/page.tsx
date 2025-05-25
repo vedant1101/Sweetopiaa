@@ -27,9 +27,6 @@ const CartPage = () => {
     return total + (price * item.quantity);
   }, 0);
 
-  // Delivery charge
-  const deliveryCharge = 100;
-
   // Total amount
   const totalAmount = subtotal;
 
