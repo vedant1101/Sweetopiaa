@@ -31,7 +31,7 @@ const CartPage = () => {
   const deliveryCharge = 100;
 
   // Total amount
-  const totalAmount = subtotal + deliveryCharge;
+  const totalAmount = subtotal;
 
   const goToCheckout = () => {
     router.push('/checkout');
@@ -150,10 +150,10 @@ const CartPage = () => {
                           {`₹${subtotal.toLocaleString('en-IN')}`}
                         </span>
                       </div>
-                      <div className="flex justify-between text-sm">
+                      {/* <div className="flex justify-between text-sm">
                         <span className="text-theme1-secondary">Delivery Charge</span>
                         <span className="text-theme1-secondary">{`₹${deliveryCharge.toLocaleString('en-IN')}`}</span>
-                      </div>
+                      </div> */}
                       <div className="border-t pt-3 border-theme1-primary/20">
                         <div className="flex justify-between font-medium">
                           <span className="text-theme1-secondary">Total</span>

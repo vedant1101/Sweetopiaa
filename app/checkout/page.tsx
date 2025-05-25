@@ -7,7 +7,6 @@ import Image from 'next/image';
 const CheckoutPage = () => {
   const router = useRouter();
   const { cartItems, clearCart } = useCart();
-  const oliveGold = '#8e8b63';
 
   // Loading state for payment processing
   const [isProcessing, setIsProcessing] = useState(false);
@@ -27,6 +26,7 @@ const [pincodeDeliveryInfo, setPincodeDeliveryInfo] = useState<{
   isChecking: false,
   error: null
 });
+
 interface PaymentResponse {
   razorpay_payment_id: string;
   razorpay_order_id: string;
@@ -272,7 +272,7 @@ const checkPincodeDelivery = (pincode:string) => {
         
         // Financial information
         subtotal: subtotal,
-        tax_amount: taxes,
+        tax_amount: 0,
         shipping_cost: getShippingCost(),
         discount_amount: 0,
         total_amount: totalAmount,
@@ -324,7 +324,6 @@ const checkPincodeDelivery = (pincode:string) => {
   };
 
   // Handle form input changes
-  // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
   const { name, value } = e.target;
   setFormData(prev => ({
@@ -344,17 +343,14 @@ const checkPincodeDelivery = (pincode:string) => {
     return total + (price * item.quantity);
   }, 0);
 
-  // Shipping cost based on method
   // Shipping cost based on pincode
 const getShippingCost = () => {
   return pincodeDeliveryInfo.isValid ? pincodeDeliveryInfo.cost : 0;
 };
 
-  // Calculate taxes (5% of subtotal)
-  const taxes = subtotal * 0.05;
 
   // Total amount
-  const totalAmount = subtotal + getShippingCost() + taxes;
+  const totalAmount = subtotal + getShippingCost();
 
   // Handle navigation back to cart
   const goToCart = () => {
@@ -413,7 +409,7 @@ const getShippingCost = () => {
           shippingMethod: formData.shippingMethod,
         },
         theme: {
-          color: oliveGold,
+          color: 'var(--theme1-primary)',
         },
         handler: function (response: PaymentResponse) {
           // Handle successful payment
@@ -450,7 +446,6 @@ const getShippingCost = () => {
   };
 
   // Handle payment success
- // Handle payment success
  const handlePaymentSuccess = async (response: PaymentResponse) => {
   try {
     // Create order in database
@@ -474,7 +469,6 @@ const getShippingCost = () => {
 };
 
   // Handle cash on delivery
-  // Handle cash on delivery
 const handleCashOnDelivery = async () => {
   try {
     setIsProcessing(true);
@@ -497,7 +491,6 @@ const handleCashOnDelivery = async () => {
 };
 
   // Handle form submission for each step
- // Handle form submission for each step
  const handleNextStep = (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
   
@@ -535,22 +528,21 @@ const handleCashOnDelivery = async () => {
   };
 
   // Input field style class
-  const inputClass = "w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50";
-  const inputStyle = { borderColor: `${oliveGold}40` };
+  const inputClass = "w-full p-3 border border-theme1-primary/20 rounded-md focus:outline-none focus:ring-2 focus:ring-theme1-tertiary focus:border-transparent transition-all duration-200 text-theme1-primary bg-theme1-bg";
 
   // Render the current step form
   const renderStepForm = () => {
     switch(checkoutStep) {
       case 1:
         return (
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div className="p-4 border-b" style={{ borderColor: `${oliveGold}20` }}>
-              <h2 className="font-serif text-lg" style={{ color: oliveGold }}>Customer Information</h2>
+          <div className="bg-theme1-sidebar rounded-lg shadow-sm overflow-hidden">
+            <div className="p-4 border-b border-theme1-primary/20">
+              <h2 className="font-serif text-lg text-theme1-primary">Customer Information</h2>
             </div>
             <div className="p-6 space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                  <label className="block text-sm font-medium text-theme1-primary mb-2">First Name</label>
                   <input
                     type="text"
                     name="firstName"
@@ -558,11 +550,10 @@ const handleCashOnDelivery = async () => {
                     onChange={handleInputChange}
                     required
                     className={inputClass}
-                    style={inputStyle}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                  <label className="block text-sm font-medium text-theme1-primary mb-2">Last Name</label>
                   <input
                     type="text"
                     name="lastName"
@@ -570,14 +561,13 @@ const handleCashOnDelivery = async () => {
                     onChange={handleInputChange}
                     required
                     className={inputClass}
-                    style={inputStyle}
                   />
                 </div>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                  <label className="block text-sm font-medium text-theme1-primary mb-2">Email</label>
                   <input
                     type="email"
                     name="email"
@@ -585,11 +575,10 @@ const handleCashOnDelivery = async () => {
                     onChange={handleInputChange}
                     required
                     className={inputClass}
-                    style={inputStyle}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                  <label className="block text-sm font-medium text-theme1-primary mb-2">Phone Number</label>
                   <input
                     type="tel"
                     name="phone"
@@ -597,7 +586,6 @@ const handleCashOnDelivery = async () => {
                     onChange={handleInputChange}
                     required
                     className={inputClass}
-                    style={inputStyle}
                   />
                 </div>
               </div>
@@ -606,33 +594,13 @@ const handleCashOnDelivery = async () => {
                 <button
                   type="button"
                   onClick={handlePreviousStep}
-                  className="px-4 py-2 text-sm border rounded-md transition-colors duration-300"
-                  style={{
-                    borderColor: oliveGold,
-                    color: oliveGold,
-                    backgroundColor: 'transparent'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.backgroundColor = oliveGold;
-                    e.currentTarget.style.color = 'white';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.color = oliveGold;
-                  }}
+                  className="px-4 py-2 text-sm border border-theme1-tertiary text-theme1-tertiary hover:bg-theme1-tertiary hover:text-theme1-bg rounded-md transition-colors duration-300"
                 >
                   Back to Cart
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 text-white rounded-md transition-all duration-300"
-                  style={{ backgroundColor: oliveGold }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.opacity = '0.9';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.opacity = '1';
-                  }}
+                  className="px-6 py-2 text-white rounded-md bg-theme1-primary hover:bg-theme1-primary/90 transition-all duration-300"
                 >
                   Continue to Shipping
                 </button>
@@ -643,13 +611,13 @@ const handleCashOnDelivery = async () => {
       
       case 2:
         return (
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div className="p-4 border-b" style={{ borderColor: `${oliveGold}20` }}>
-              <h2 className="font-serif text-lg" style={{ color: oliveGold }}>Shipping Information</h2>
+          <div className="bg-theme1-sidebar rounded-lg shadow-sm overflow-hidden">
+            <div className="p-4 border-b border-theme1-primary/20">
+              <h2 className="font-serif text-lg text-theme1-primary">Shipping Information</h2>
             </div>
             <div className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                <label className="block text-sm font-medium text-theme1-primary mb-2">Address</label>
                 <textarea
                   name="address"
                   value={formData.address}
@@ -657,13 +625,12 @@ const handleCashOnDelivery = async () => {
                   required
                   rows={3}
                   className={inputClass}
-                  style={inputStyle}
                 />
               </div>
               
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                  <label className="block text-sm font-medium text-theme1-primary mb-2">City</label>
                   <input
                     type="text"
                     name="city"
@@ -671,11 +638,10 @@ const handleCashOnDelivery = async () => {
                     onChange={handleInputChange}
                     required
                     className={inputClass}
-                    style={inputStyle}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
+                  <label className="block text-sm font-medium text-theme1-primary mb-2">State</label>
                   <input
                     type="text"
                     name="state"
@@ -683,171 +649,67 @@ const handleCashOnDelivery = async () => {
                     onChange={handleInputChange}
                     required
                     className={inputClass}
-                    style={inputStyle}
                   />
                 </div>
                 <div>
-  <label className="block text-sm font-medium text-gray-700 mb-1">Pincode</label>
-  <input
-    type="text"
-    name="pincode"
-    value={formData.pincode}
-    onChange={handleInputChange}
-    required
-    maxLength={6}
-    pattern="[0-9]{6}"
-    className={`${inputClass} ${pincodeDeliveryInfo.isValid === false ? 'border-red-500' : ''}`}
-    style={{
-      ...inputStyle,
-      borderColor: pincodeDeliveryInfo.isValid === false ? '#ef4444' : 
-                  pincodeDeliveryInfo.isValid === true ? '#10b981' : `${oliveGold}40`
-    }}
-  />
-  {/* Pincode validation messages */}
-  {pincodeDeliveryInfo.isChecking && (
-    <p className="text-xs text-gray-500 mt-1 flex items-center">
-      <svg className="animate-spin h-3 w-3 mr-1" viewBox="0 0 24 24">
-        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
-        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-      </svg>
-      Checking delivery availability...
-    </p>
-  )}
-  {pincodeDeliveryInfo.isValid === true && (
-    <p className="text-xs text-green-600 mt-1 flex items-center">
-      <svg className="h-3 w-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
-      </svg>
-      Delivery available • ₹{pincodeDeliveryInfo.cost} delivery charge
-    </p>
-  )}
-  {pincodeDeliveryInfo.isValid === false && (
-    <p className="text-xs text-red-600 mt-1 flex items-center">
-      <svg className="h-3 w-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
-      </svg>
-      {pincodeDeliveryInfo.error}
-    </p>
-  )}
-</div>
-              </div>
-
-              {/* <div className="mt-6 pt-6 border-t" style={{ borderColor: `${oliveGold}20` }}>
-                <h3 className="font-medium mb-3">Shipping Method</h3>
-                <div className="space-y-3">
-                  <label className="flex items-center p-3 border rounded-md cursor-pointer transition-colors"
-                    style={{ 
-                      borderColor: formData.shippingMethod === 'standard' ? oliveGold : `${oliveGold}40`,
-                      backgroundColor: formData.shippingMethod === 'standard' ? `${oliveGold}10` : 'transparent'
-                    }}
-                  >
-                    <input
-                      type="radio"
-                      name="shippingMethod"
-                      value="standard"
-                      checked={formData.shippingMethod === 'standard'}
-                      onChange={handleInputChange}
-                      className="mr-2"
-                    />
-                    <div className="flex-grow">
-                      <div className="flex justify-between">
-                        <span className="font-medium">Standard Shipping</span>
-                        <span>₹100</span>
-                      </div>
-                      <p className="text-sm text-gray-600">Delivery in 5-7 business days</p>
-                    </div>
-                  </label>
-                  
-                  <label className="flex items-center p-3 border rounded-md cursor-pointer transition-colors"
-                    style={{ 
-                      borderColor: formData.shippingMethod === 'express' ? oliveGold : `${oliveGold}40`,
-                      backgroundColor: formData.shippingMethod === 'express' ? `${oliveGold}10` : 'transparent'
-                    }}
-                  >
-                    <input
-                      type="radio"
-                      name="shippingMethod"
-                      value="express"
-                      checked={formData.shippingMethod === 'express'}
-                      onChange={handleInputChange}
-                      className="mr-2"
-                    />
-                    <div className="flex-grow">
-                      <div className="flex justify-between">
-                        <span className="font-medium">Express Shipping</span>
-                        <span>₹200</span>
-                      </div>
-                      <p className="text-sm text-gray-600">Delivery in 2-3 business days</p>
-                    </div>
-                  </label>
-                  
-                  <label className="flex items-center p-3 border rounded-md cursor-pointer transition-colors"
-                    style={{ 
-                      borderColor: formData.shippingMethod === 'premium' ? oliveGold : `${oliveGold}40`,
-                      backgroundColor: formData.shippingMethod === 'premium' ? `${oliveGold}10` : 'transparent'
-                    }}
-                  >
-                    <input
-                      type="radio"
-                      name="shippingMethod"
-                      value="premium"
-                      checked={formData.shippingMethod === 'premium'}
-                      onChange={handleInputChange}
-                      className="mr-2"
-                    />
-                    <div className="flex-grow">
-                      <div className="flex justify-between">
-                        <span className="font-medium">Premium Shipping</span>
-                        <span>₹400</span>
-                      </div>
-                      <p className="text-sm text-gray-600">Delivery in 1 business day</p>
-                    </div>
-                  </label>
+                  <label className="block text-sm font-medium text-theme1-primary mb-2">Pincode</label>
+                  <input
+                    type="text"
+                    name="pincode"
+                    value={formData.pincode}
+                    onChange={handleInputChange}
+                    required
+                    maxLength={6}
+                    pattern="[0-9]{6}"
+                    className={`${inputClass} ${pincodeDeliveryInfo.isValid === false ? 'border-red-500' : pincodeDeliveryInfo.isValid === true ? 'border-green-500' : ''}`}
+                  />
+                  {/* Pincode validation messages */}
+                  {pincodeDeliveryInfo.isChecking && (
+                    <p className="text-xs text-theme1-secondary mt-1 flex items-center">
+                      <svg className="animate-spin h-3 w-3 mr-1" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                      </svg>
+                      Checking delivery availability...
+                    </p>
+                  )}
+                  {pincodeDeliveryInfo.isValid === true && (
+                    <p className="text-xs text-green-600 mt-1 flex items-center">
+                      <svg className="h-3 w-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                      </svg>
+                      Delivery available • ₹{pincodeDeliveryInfo.cost} delivery charge
+                    </p>
+                  )}
+                  {pincodeDeliveryInfo.isValid === false && (
+                    <p className="text-xs text-red-600 mt-1 flex items-center">
+                      <svg className="h-3 w-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
+                      </svg>
+                      {pincodeDeliveryInfo.error}
+                    </p>
+                  )}
                 </div>
-              </div> */}
+              </div>
               
               <div className="flex justify-between pt-4">
                 <button
                   type="button"
                   onClick={handlePreviousStep}
-                  className="px-4 py-2 text-sm border rounded-md transition-colors duration-300"
-                  style={{
-                    borderColor: oliveGold,
-                    color: oliveGold,
-                    backgroundColor: 'transparent'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.backgroundColor = oliveGold;
-                    e.currentTarget.style.color = 'white';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.color = oliveGold;
-                  }}
+                  className="px-4 py-2 text-sm border border-theme1-tertiary text-theme1-tertiary hover:bg-theme1-tertiary hover:text-theme1-bg rounded-md transition-colors duration-300"
                 >
                   Back to Customer Info
                 </button>
                 <button
-  type="submit"
-  disabled={!pincodeDeliveryInfo.isValid}
-  className="px-6 py-2 text-white rounded-md transition-all duration-300"
-  style={{ 
-    backgroundColor: pincodeDeliveryInfo.isValid ? oliveGold : '#9ca3af',
-    opacity: pincodeDeliveryInfo.isValid ? 1 : 0.7,
-    cursor: pincodeDeliveryInfo.isValid ? 'pointer' : 'not-allowed'
-  }}
-  onMouseOver={(e) => {
-    if (pincodeDeliveryInfo.isValid) {
-      e.currentTarget.style.opacity = '0.9';
-    }
-  }}
-  onMouseOut={(e) => {
-    if (pincodeDeliveryInfo.isValid) {
-      e.currentTarget.style.opacity = '1';
-    }
-  }}
+ type="submit"
+ disabled={!pincodeDeliveryInfo.isValid}
+ className={`px-6 py-2 text-sm border border-theme1-tertiary rounded-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
+   pincodeDeliveryInfo.isValid 
+     ? 'text-theme1-tertiary bg-transparent hover:bg-theme1-tertiary hover:text-theme1-bg' 
+     : 'text-theme1-tertiary/50 bg-transparent'
+ }`}
 >
-  Continue to Payment
+ Continue to Payment
 </button>
               </div>
             </div>
@@ -856,18 +718,13 @@ const handleCashOnDelivery = async () => {
       
       case 3:
         return (
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div className="p-4 border-b" style={{ borderColor: `${oliveGold}20` }}>
-              <h2 className="font-serif text-lg" style={{ color: oliveGold }}>Payment Information</h2>
+          <div className="bg-theme1-sidebar rounded-lg shadow-sm overflow-hidden">
+            <div className="p-4 border-b border-theme1-primary/20">
+              <h2 className="font-serif text-lg text-theme1-primary">Payment Information</h2>
             </div>
             <div className="p-6 space-y-4">
               <div className="space-y-3">
-                <label className="flex items-center p-3 border rounded-md cursor-pointer transition-colors"
-                  style={{ 
-                    borderColor: formData.paymentMethod === 'razorpay' ? oliveGold : `${oliveGold}40`,
-                    backgroundColor: formData.paymentMethod === 'razorpay' ? `${oliveGold}10` : 'transparent'
-                  }}
-                >
+                <label className={`flex items-center p-3 border rounded-md cursor-pointer transition-colors ${formData.paymentMethod === 'razorpay' ? 'border-theme1-primary bg-theme1-primary/10' : 'border-theme1-primary/20'}`}>
                   <input
                     type="radio"
                     name="paymentMethod"
@@ -877,24 +734,19 @@ const handleCashOnDelivery = async () => {
                     className="mr-2"
                   />
                   <div className="flex items-center">
-                    <span className="font-medium mr-2">Pay with Razorpay</span>
+                    <span className="font-medium mr-2 text-theme1-primary">Pay with Razorpay</span>
                     <Image 
-  src="/razorpay-logo.png" 
-  alt="Razorpay" 
-  width={80}
-  height={24}
-  className="h-6" 
-  onError={(e) => (e.currentTarget.style.display = 'none')}
-/>
+                      src="/razorpay-logo.png" 
+                      alt="Razorpay" 
+                      width={80}
+                      height={24}
+                      className="h-6" 
+                      onError={(e) => (e.currentTarget.style.display = 'none')}
+                    />
                   </div>
                 </label>
                 
-                <label className="flex items-center p-3 border rounded-md cursor-pointer transition-colors"
-                  style={{ 
-                    borderColor: formData.paymentMethod === 'cod' ? oliveGold : `${oliveGold}40`,
-                    backgroundColor: formData.paymentMethod === 'cod' ? `${oliveGold}10` : 'transparent'
-                  }}
-                >
+                <label className={`flex items-center p-3 border rounded-md cursor-pointer transition-colors ${formData.paymentMethod === 'cod' ? 'border-theme1-primary bg-theme1-primary/10' : 'border-theme1-primary/20'}`}>
                   <input
                     type="radio"
                     name="paymentMethod"
@@ -903,12 +755,12 @@ const handleCashOnDelivery = async () => {
                     onChange={handleInputChange}
                     className="mr-2"
                   />
-                  <span className="font-medium">Cash on Delivery</span>
+                  <span className="font-medium text-theme1-primary">Cash on Delivery</span>
                 </label>
               </div>
               
-              <div className="mt-6 pt-4 border-t" style={{ borderColor: `${oliveGold}20` }}>
-                <p className="text-sm text-gray-600 mb-4">
+              <div className="mt-6 pt-4 border-t border-theme1-primary/20">
+                <p className="text-sm text-theme1-secondary mb-4">
                   {formData.paymentMethod === 'razorpay' 
                     ? 'You will be redirected to Razorpay to complete your payment securely.' 
                     : 'You will pay when your order is delivered.'}
@@ -920,46 +772,14 @@ const handleCashOnDelivery = async () => {
                   type="button"
                   onClick={handlePreviousStep}
                   disabled={isProcessing}
-                  className="px-4 py-2 text-sm border rounded-md transition-colors duration-300"
-                  style={{
-                    borderColor: oliveGold,
-                    color: oliveGold,
-                    backgroundColor: 'transparent',
-                    opacity: isProcessing ? 0.7 : 1
-                  }}
-                  onMouseOver={(e) => {
-                    if (!isProcessing) {
-                      e.currentTarget.style.backgroundColor = oliveGold;
-                      e.currentTarget.style.color = 'white';
-                    }
-                  }}
-                  onMouseOut={(e) => {
-                    if (!isProcessing) {
-                      e.currentTarget.style.backgroundColor = 'transparent';
-                      e.currentTarget.style.color = oliveGold;
-                    }
-                  }}
+                  className="px-4 py-2 text-sm border border-theme1-tertiary text-theme1-tertiary hover:bg-theme1-tertiary hover:text-theme1-bg rounded-md transition-colors duration-300 disabled:opacity-50"
                 >
                   Back to Shipping
                 </button>
                 <button
                   type="submit"
                   disabled={isProcessing}
-                  className="px-6 py-2 text-white rounded-md transition-all duration-300 flex items-center"
-                  style={{ 
-                    backgroundColor: oliveGold,
-                    opacity: isProcessing ? 0.7 : 1
-                  }}
-                  onMouseOver={(e) => {
-                    if (!isProcessing) {
-                      e.currentTarget.style.opacity = '0.9';
-                    }
-                  }}
-                  onMouseOut={(e) => {
-                    if (!isProcessing) {
-                      e.currentTarget.style.opacity = '1';
-                    }
-                  }}
+                  className="px-6 py-2 text-white rounded-md bg-theme1-primary hover:bg-theme1-primary/90 transition-all duration-300 flex items-center disabled:opacity-50"
                 >
                   {isProcessing ? (
                     <>
@@ -984,36 +804,18 @@ const handleCashOnDelivery = async () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen" style={{ backgroundColor: '#FEFAFC' }}>
+    <div className="flex flex-col min-h-screen bg-theme1-bg">
       {/* Main content */}
       <div className="flex-grow">
         {/* Header */}
         <header className="p-4 sm:p-6 flex justify-between items-center">
-          <h1 className="text-2xl font-serif" style={{ color: oliveGold }}>
+          <h1 className="text-2xl font-serif text-theme1-primary">
             Checkout
           </h1>
           <button
             onClick={goToCart}
             disabled={isProcessing}
-            className="px-3 py-1 font-sans text-xs rounded-md border transition-colors duration-300"
-            style={{
-              borderColor: oliveGold,
-              color: oliveGold,
-              backgroundColor: 'transparent',
-              opacity: isProcessing ? 0.7 : 1
-            }}
-            onMouseOver={(e) => {
-              if (!isProcessing) {
-                e.currentTarget.style.backgroundColor = oliveGold;
-                e.currentTarget.style.color = 'white';
-              }
-            }}
-            onMouseOut={(e) => {
-              if (!isProcessing) {
-                e.currentTarget.style.backgroundColor = 'transparent';
-                e.currentTarget.style.color = oliveGold;
-              }
-            }}
+            className="px-3 py-1 font-sans text-xs rounded-md border border-theme1-tertiary text-theme1-tertiary hover:bg-theme1-tertiary hover:text-theme1-bg transition-colors duration-300 disabled:opacity-50"
           >
             Back to Cart
           </button>
@@ -1023,47 +825,32 @@ const handleCashOnDelivery = async () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 mb-6">
           <div className="flex items-center justify-between">
             <div className="flex flex-col items-center">
-              <div className={`w-8 h-8 flex items-center justify-center rounded-full ${checkoutStep >= 1 ? 'text-white' : 'text-gray-400 border'}`} 
-                style={{ 
-                  backgroundColor: checkoutStep >= 1 ? oliveGold : 'transparent',
-                  borderColor: oliveGold
-                }}
-              >
+              <div className={`w-8 h-8 flex items-center justify-center rounded-full text-white ${checkoutStep >= 1 ? 'bg-theme1-primary' : 'bg-theme1-secondary/40 border border-theme1-primary'}`}>
                 1
               </div>
-              <span className="text-xs mt-1" style={{ color: checkoutStep >= 1 ? oliveGold : 'gray' }}>
+              <span className={`text-xs mt-1 ${checkoutStep >= 1 ? 'text-theme1-primary' : 'text-theme1-secondary'}`}>
                 Customer
               </span>
             </div>
             
-            <div className={`flex-grow h-1 mx-2`} style={{ backgroundColor: checkoutStep >= 2 ? oliveGold : `${oliveGold}30` }}></div>
+            <div className={`flex-grow h-1 mx-2 ${checkoutStep >= 2 ? 'bg-theme1-primary' : 'bg-theme1-secondary/20'}`}></div>
             
             <div className="flex flex-col items-center">
-              <div className={`w-8 h-8 flex items-center justify-center rounded-full ${checkoutStep >= 2 ? 'text-white' : 'text-gray-400 border'}`} 
-                style={{ 
-                  backgroundColor: checkoutStep >= 2 ? oliveGold : 'transparent',
-                  borderColor: oliveGold
-                }}
-              >
+              <div className={`w-8 h-8 flex items-center justify-center rounded-full text-white ${checkoutStep >= 2 ? 'bg-theme1-primary' : 'bg-theme1-secondary/40 border border-theme1-primary'}`}>
                 2
               </div>
-              <span className="text-xs mt-1" style={{ color: checkoutStep >= 2 ? oliveGold : 'gray' }}>
+              <span className={`text-xs mt-1 ${checkoutStep >= 2 ? 'text-theme1-primary' : 'text-theme1-secondary'}`}>
                 Shipping
               </span>
             </div>
             
-            <div className={`flex-grow h-1 mx-2`} style={{ backgroundColor: checkoutStep >= 3 ? oliveGold : `${oliveGold}30` }}></div>
+            <div className={`flex-grow h-1 mx-2 ${checkoutStep >= 3 ? 'bg-theme1-primary' : 'bg-theme1-secondary/20'}`}></div>
             
             <div className="flex flex-col items-center">
-              <div className={`w-8 h-8 flex items-center justify-center rounded-full ${checkoutStep >= 3 ? 'text-white' : 'text-gray-400 border'}`} 
-                style={{ 
-                  backgroundColor: checkoutStep >= 3 ? oliveGold : 'transparent',
-                  borderColor: oliveGold
-                }}
-              >
+              <div className={`w-8 h-8 flex items-center justify-center rounded-full text-white ${checkoutStep >= 3 ? 'bg-theme1-primary' : 'bg-theme1-secondary/40 border border-theme1-primary'}`}>
                 3
               </div>
-              <span className="text-xs mt-1" style={{ color: checkoutStep >= 3 ? oliveGold : 'gray' }}>
+              <span className={`text-xs mt-1 ${checkoutStep >= 3 ? 'text-theme1-primary' : 'text-theme1-secondary'}`}>
                 Payment
               </span>
             </div>
@@ -1081,9 +868,9 @@ const handleCashOnDelivery = async () => {
             
             {/* Right Side - Order Summary */}
             <div className="lg:col-span-2">
-              <div className="bg-white rounded-lg shadow-sm overflow-hidden sticky top-6">
-                <div className="p-4 border-b" style={{ borderColor: `${oliveGold}20` }}>
-                  <h2 className="font-serif text-lg" style={{ color: oliveGold }}>Order Summary</h2>
+              <div className="bg-theme1-sidebar rounded-lg shadow-sm overflow-hidden sticky top-6">
+                <div className="p-4 border-b border-theme1-primary/20">
+                  <h2 className="font-serif text-lg text-theme1-primary">Order Summary</h2>
                 </div>
                 
                 <div className="p-4">
@@ -1098,11 +885,11 @@ const handleCashOnDelivery = async () => {
                             }}></div>
                           </div>
                           <div>
-                            <p className="font-medium">{item.name}</p>
-                            <p className="text-gray-600">Qty: {item.quantity}</p>
+                            <p className="font-medium text-theme1-primary">{item.name}</p>
+                            <p className="text-theme1-secondary">Qty: {item.quantity}</p>
                           </div>
                         </div>
-                        <span>
+                        <span className="text-theme1-primary">
                           {`₹${(parseFloat(item.price.replace('₹', '').replace(',', '')) * item.quantity).toLocaleString('en-IN')}`}
                         </span>
                       </div>
@@ -1110,39 +897,37 @@ const handleCashOnDelivery = async () => {
                   </div>
                   
                   {/* Cost breakdown */}
-                  <div className="space-y-3 border-t pt-3 mb-4" style={{ borderColor: `${oliveGold}20` }}>
+                  <div className="space-y-3 border-t pt-3 mb-4 border-theme1-primary/20">
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Subtotal</span>
-                      <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Subtotal</span>
-                      <span>
+                      <span className="text-theme1-secondary">Subtotal</span>
+                      <span className="text-theme1-secondary">
                         {`₹${subtotal.toLocaleString('en-IN')}`}
                       </span>
                     </div>
                     <div className="flex justify-between text-sm">
-  <span className="text-gray-600">Delivery Charge</span>
-  <span>
-    {pincodeDeliveryInfo.isValid ? 
-      `₹${getShippingCost().toLocaleString('en-IN')}` : 
-      'Enter pincode'
-    }
-  </span>
-</div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Tax (5%)</span>
-                      <span>{`₹${taxes.toLocaleString('en-IN')}`}</span>
+                      <span className="text-theme1-secondary">Delivery Charge</span>
+                      <span className="text-theme1-secondary">
+                        {pincodeDeliveryInfo.isValid ? 
+                          `₹${getShippingCost().toLocaleString('en-IN')}` : 
+                          'Enter pincode'
+                        }
+                      </span>
                     </div>
-                    <div className="border-t pt-3" style={{ borderColor: `${oliveGold}20` }}>
+                    {/* <div className="flex justify-between text-sm">
+                      <span className="text-theme1-secondary">Tax (5%)</span>
+                      <span className="text-theme1-secondary">{`₹${taxes.toLocaleString('en-IN')}`}</span>
+                    </div> */}
+                    <div className="border-t pt-3 border-theme1-primary/20">
                       <div className="flex justify-between font-medium">
-                        <span>Total</span>
-                        <span style={{ color: oliveGold }}>
+                        <span className="text-theme1-secondary">Total</span>
+                        <span className="text-theme1-primary">
                           {`₹${totalAmount.toLocaleString('en-IN')}`}
                         </span>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="mt-4 text-xs text-center text-gray-500">
+                  <div className="mt-4 text-xs text-center text-theme1-secondary/70">
                     <p>All transactions are secure and encrypted.</p>
                     <p className="mt-1">By placing your order, you agree to our Terms of Service and Privacy Policy.</p>
                   </div>
@@ -1155,11 +940,10 @@ const handleCashOnDelivery = async () => {
 
       {/* Footer */}
       <footer className="p-4 text-center mt-auto">
-        <p className="text-dark-text font-sans text-xs">
+        <p className="text-theme1-secondary font-sans text-xs">
           © {new Date().getFullYear()} Sweetopiaa. All rights reserved.
         </p>
       </footer>
-    </div>
     </div>
   );
 };
