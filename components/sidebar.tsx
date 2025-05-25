@@ -40,7 +40,6 @@ const Sidebar = () => {
     { key: 'home', label: 'Home' },
     { key: 'about', label: 'About' },
     { key: 'shop', label: 'Shop' },
-    { key: 'contact', label: 'Contact' }
   ];
 
   return (

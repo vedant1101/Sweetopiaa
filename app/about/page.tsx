@@ -27,51 +27,49 @@ const AboutPage = () => {
         </button>
       </header>
       
-      {/* Our Story Section */}
-      <section className="p-6 sm:p-10 flex flex-col lg:flex-row items-center gap-12 mb-16">
-        <div className="lg:w-1/2 space-y-6">
-          <h2 className="text-2xl font-serif mb-4 text-theme1-primary">Our Story</h2>
-          <div className="space-y-4">
-          <p className="text-theme1-secondary leading-relaxed font-sans mb-4">
-  You can&apos;t go looking for your passion; It finds You.
-</p>
-
-<p className="text-theme1-secondary leading-relaxed font-sans mb-4">
-  Growing up with a Sikhni mom and Bundelkhandi dad, I lived at the intersection of diverse culinary traditions. Food became the epicenter of our lives, nourishing my soul first and stomach second.
-</p>
-
-<p className="text-theme1-secondary leading-relaxed font-sans mb-4">
-  In college, I baked cakes for friends, exchanging them for treats from our St. Stephen&apos;s college Dhaba. But it was my son&apos;s love for fondant superhero cakes that turned this casual hobby into a serious pursuit.
-</p>
-
-<p className="text-theme1-secondary leading-relaxed font-sans mb-4">
-  Soon the aromas from my tiny kitchen reached friends and acquaintances. As Julia Child famously said, &ldquo;A Party without a Cake, is Just a meeting.&rdquo; Before I knew it, I had become a full-time baker.
-</p>
-
-<p className="text-theme1-secondary leading-relaxed font-sans mb-4">
-  Baking ignites my creativity. It&apos;s about crafting those special moments when the world pauses, you float in the clouds, and stop counting calories! Nothing brings me more joy than seeing people celebrate with a Sweetopia cake.
-</p>
-
-<p className="text-theme1-secondary leading-relaxed font-sans">
-  This is how Sweetopia was born; spreading joy, creating memories, one cake at a time.
-</p>
-            {/* <p className="text-theme1-secondary leading-relaxed font-sans">
-              Sweetopiaa began as a small kitchen experiment in 2018, when our founder Natalie discovered her passion for artisanal baking during a particularly challenging time in her life. What started as a form of therapy soon blossomed into a craft filled with creativity and joy.
-            </p>
-            <p className="text-theme1-secondary leading-relaxed font-sans">
-              After sharing her creations with friends and family, the overwhelming positive response encouraged Natalie to take a leap of faith. She left her corporate job to pursue her dream of creating a space where people could experience the magic of handcrafted desserts made with love and intention.
-            </p>
-            <p className="text-theme1-secondary leading-relaxed font-sans">
-              In 2020, despite the challenges of opening during a pandemic, Sweetopiaa's first bakery opened its doors. Our commitment to quality, creativity, and community quickly earned us a loyal following, and we've been growing ever since.
-            </p> */}
-          </div>
-        </div>
-        <div className="lg:w-1/2 relative aspect-square w-full max-w-lg">
-          <div className="absolute inset-0 bg-cover bg-center rounded-lg shadow-md" style={{
-            backgroundImage: `url('/images/story-image.webp')`
-          }}></div>
-        </div>
-      </section>
+   {/* Our Story Section */}
+<section className="p-6 sm:p-10 flex flex-col lg:flex-row items-center gap-12 mb-16">
+  <div className="lg:w-1/2 space-y-6">
+    <h2 className="text-2xl font-serif mb-4 text-theme1-primary">Our Story</h2>
+    <div className="space-y-4">
+      <p className="text-theme1-secondary leading-relaxed font-sans mb-4">
+        You can&apos;t go looking for your passion; It finds You.
+      </p>
+      <p className="text-theme1-secondary leading-relaxed font-sans mb-4">
+        Growing up with a Sikhni mom and Bundelkhandi dad, I lived at the intersection of diverse culinary traditions. Food became the epicenter of our lives, nourishing my soul first and stomach second.
+      </p>
+      <p className="text-theme1-secondary leading-relaxed font-sans mb-4">
+        In college, I baked cakes for friends, exchanging them for treats from our St. Stephen&apos;s college Dhaba. But it was my son&apos;s love for fondant superhero cakes that turned this casual hobby into a serious pursuit.
+      </p>
+      <p className="text-theme1-secondary leading-relaxed font-sans mb-4">
+        Soon the aromas from my tiny kitchen reached friends and acquaintances. As Julia Child famously said, &ldquo;A Party without a Cake, is Just a meeting.&rdquo; Before I knew it, I had become a full-time baker.
+      </p>
+      <p className="text-theme1-secondary leading-relaxed font-sans mb-4">
+        Baking ignites my creativity. It&apos;s about crafting those special moments when the world pauses, you float in the clouds, and stop counting calories! Nothing brings me more joy than seeing people celebrate with a Sweetopia cake.
+      </p>
+      <p className="text-theme1-secondary leading-relaxed font-sans">
+        This is how Sweetopia was born; spreading joy, creating memories, one cake at a time.
+      </p>
+    </div>
+  </div>
+  
+  {/* Polished Image Card */}
+  <div className="lg:w-1/2 flex justify-center lg:justify-end">
+    <div className="relative group max-w-sm">
+      {/* Decorative background element */}
+      <div className="absolute -inset-1 bg-gradient-to-r from-pink-200 via-purple-200 to-indigo-200 rounded-xl blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+      
+      {/* Main image container */}
+      <div className="relative bg-white p-2 rounded-xl shadow-xl ring-1 ring-gray-900/5">
+        <img
+          src="/images/storyimage.jpeg"
+          alt="Our founder in the kitchen surrounded by beautiful cakes and desserts"
+          className="w-full h-auto rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+        />
+      </div>
+    </div>
+  </div>
+</section>
       
       {/* Our Values Section */}
       <section className="bg-theme1-secondary/10 p-6 sm:p-10 py-16">
@@ -118,11 +116,11 @@ const AboutPage = () => {
                 src="/images/staff1.jpeg" 
                 alt="Marcus Rivera" 
                 fill
-                className="object-cover"
+                className="object-contain"
               />
             </div>
-            <h3 className="font-serif text-theme1-primary">Marcus Rivera</h3>
-            <p className="text-sm text-theme1-secondary">Executive Pastry Chef</p>
+            <h3 className="font-serif text-theme1-primary">Nidhi Shaw</h3>
+            <p className="text-sm text-theme1-secondary">Bakery and Design Assistant</p>
           </div>
           <div className="text-center w-64">
             <div className="w-full aspect-square relative rounded-full mb-4 overflow-hidden">
@@ -130,11 +128,11 @@ const AboutPage = () => {
                 src="/images/headchef.jpeg" 
                 alt="Sapna Nigam" 
                 fill
-                className="object-cover"
+                className="object-contain"
               />
             </div>
             <h3 className="font-serif text-theme1-primary">Sapna Nigam</h3>
-            <p className="text-sm text-theme1-secondary">Founder & Head Baker</p>
+            <p className="text-sm text-theme1-secondary">Owner and Cake Designer</p>
           </div>
           <div className="text-center w-64">
             <div className="w-full aspect-square relative rounded-full mb-4 overflow-hidden">
@@ -142,11 +140,11 @@ const AboutPage = () => {
                 src="/images/staff2.jpeg" 
                 alt="Sophia Kim" 
                 fill
-                className="object-cover"
+                className="object-contain"
               />
             </div>
-            <h3 className="font-serif text-theme1-primary">Sophia Kim</h3>
-            <p className="text-sm text-theme1-secondary">Cake Designer</p>
+            <h3 className="font-serif text-theme1-primary">Harish Lal</h3>
+            <p className="text-sm text-theme1-secondary">Pastry Chef</p>
           </div>
         </div>
       </div>
