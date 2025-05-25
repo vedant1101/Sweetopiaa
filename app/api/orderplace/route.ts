@@ -53,6 +53,7 @@ export interface OrderRequest {
   subtotal: number;
   tax_amount?: number;
   shipping_cost?: number;
+  shipping_method?: string;
   discount_amount?: number;
   total_amount: number;
   currency?: string;
@@ -98,6 +99,7 @@ async function sendOrderNotification(orderData: OrderRequest, orderId: string) {
                   <p style="margin: 5px 0;"><strong>Order ID:</strong> ${orderId}</p>
                   <p style="margin: 5px 0;"><strong>Status:</strong> <span style="color: #28a745; font-weight: bold;">${orderData.order_status || 'Completed'}</span></p>
                   <p style="margin: 5px 0;"><strong>Payment:</strong> ${orderData.payment_method.toUpperCase()}</p>
+                  <p style="margin: 5px 0;"><strong>Delivery:</strong> <span style="color: #8e8b63; font-weight: bold;">${orderData.shipping_method === 'express' ? 'Express Delivery' : 'Standard Delivery'}</span></p>
                 </div>
               </div>
 
@@ -149,7 +151,7 @@ async function sendOrderNotification(orderData: OrderRequest, orderId: string) {
                 </div>
               </div>
 
-              <!-- Financial Summary -->
+              <!-- Payment Summary -->
               <div style="background: #d4edda; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
                 <h3 style="color: #8e8b63; margin: 0 0 15px 0; font-size: 18px;">💰 Financial Summary</h3>
                 <div style="background: white; padding: 15px; border-radius: 6px;">
@@ -158,12 +160,8 @@ async function sendOrderNotification(orderData: OrderRequest, orderId: string) {
                     <span>₹${orderData.subtotal.toLocaleString('en-IN')}</span>
                   </div>
                   <div style="display: flex; justify-content: space-between; margin: 8px 0; padding: 5px 0;">
-                    <span>Delivery Charges:</span>
+                    <span>Delivery Charges ${orderData.shipping_method === 'express' ? '(Express)' : '(Standard)'}:</span>
                     <span>₹${(orderData.shipping_cost || 0).toLocaleString('en-IN')}</span>
-                  </div>
-                  <div style="display: flex; justify-content: space-between; margin: 8px 0; padding: 5px 0;">
-                    <span>Tax (5%):</span>
-                    <span>₹${(orderData.tax_amount || 0).toLocaleString('en-IN')}</span>
                   </div>
                   ${orderData.discount_amount ? `
                   <div style="display: flex; justify-content: space-between; margin: 8px 0; padding: 5px 0; color: #28a745;">
@@ -267,6 +265,7 @@ export async function POST(request: Request) {
         subtotal: orderData.subtotal,
         tax_amount: orderData.tax_amount || 0,
         shipping_cost: orderData.shipping_cost || 0,
+        shipping_method: orderData.shipping_method || 'standard',
         discount_amount: orderData.discount_amount || 0,
         total_amount: orderData.total_amount,
         currency: orderData.currency || 'INR',
