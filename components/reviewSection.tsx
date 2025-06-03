@@ -28,7 +28,7 @@ const reviewsData: Review[] = [
     id: 1,
     title: "Bharati Chaturvedi",
     text: "I love food. But I also care where it comes from, what's in it. Who is making it? As a vegan and someone who avoids gluten, I am usually stuck with cardboard-style patisserie offerings. Mercifully, I discovered Sweetopiaa-which is as good as it gets. I like that it's small, personal, run by a woman, and super clean. Not to mention inventive, so people like me, get many goodies without breaking the bank.",
-    author: "Janice Doe",
+    author: "Environmentalist and founder of Chintan",
     location: "",
     date: "6/7/2023",
     stars: 5,
@@ -36,20 +36,20 @@ const reviewsData: Review[] = [
   },
   {
     id: 2,
-    title: "Gitanjali and Mohit",
-    text: "For the past five years now, we have been diehard 'Sweetopiaa' loyalists. Sweetopiaa has been preparing the cake for our daughter's birthday year after year and we wouldn't have it any other way! It offers an unmatched combination of personalized, 'home-like baking with top-notch ingredients and customized designs. And not to forget every festive season, the Sweetopiaa goodies 'basket' is an eagerly awaited tradition in our home - assured of both the consistency in taste and quality and of course satiety, that is guaranteed...!",
-    author: "Janey Doe",
-    location: "Syracuse, NY",
+    title: "Gitanjali and Unnati",
+    text: "I ordered Sweetopiaa’s oatmeal raisin cookies & wholewheat jaggery cookies for my mother who cannot have sugar & needs to eat healthy. I must say that top notch quality ingredients were used & the taste was so good that everyone enjoyed it! It’s now a healthy tea staple in my house and we keep reordering. The batch is made fresh to order unlike other commercial bakeries and the freshness is evident in the flavour.",
+    author: "Small business owner and student",
+    location: "",
     date: "6/7/2023",
     stars: 5,
     image: "/images/person2.jpg"
   },
   {
     id: 3,
-    title: "Afsana Lama",
-    text: "Being an HR it's not only my role and responsibility to look after the organization but also to make the happiest environment for the employees, the birthday celebration at the office is one of the special days of any employee in any organization, along with the wishes cake matters a lot,Connecting with the Sweetopiaa was the best decision and eating the delicious cake on time is like an increment would highly recommend Sweetopiaa!Best wishes to the sweet lady.",
+    title: "Disha Sukhija",
+    text: "Whenever we have guests coming over, we order Tea Cakes, puffs, quiches and cheese straws from Sweetopiaa. They are always delivered freshly baked and delicious! All the guests enjoy them also. Good quality ingredients are used and the quality has also been consistent over the years. It always makes my parties a hit!",
     author: "Jane Doe",
-    location: "New York, NY",
+    location: "",
     date: "6/7/2023",
     stars: 5,
     image: "/images/person3.jpg"
@@ -88,13 +88,13 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review, maxCharacters = 150 }) 
       <div className="group-hover:hidden">
         <div className="flex flex-col items-center mb-4">
           <div className="w-24 h-24 rounded-full overflow-hidden mb-4 border-2 border-theme1-primary"> 
-            <Image
-              src={review.image}
-              alt={review.author}
-              width={96}
-              height={96}
-              className="object-cover w-full h-full"
-            />
+          <Image
+  src={review.image}
+  alt={review.author}
+  width={96}
+  height={96}
+  className="object-cover object-center w-full h-full mb-4"
+/>
           </div>
           <StarRating rating={review.stars} />
         </div>
@@ -103,7 +103,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review, maxCharacters = 150 }) 
         &ldquo;{truncatedText}&rdquo;
         </p>
         <div className="text-sm text-theme1-secondary/70 font-sans text-center">
-          {review.author} {review.location && `, ${review.location}`} - {review.date}
+          {review.author} {review.location && `, ${review.location}`}
         </div>
       </div>
       
