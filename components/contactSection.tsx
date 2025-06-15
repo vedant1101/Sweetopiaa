@@ -1,4 +1,5 @@
 'use client';
+import { Phone } from 'lucide-react';
 import React from 'react';
 
 const ContactSection: React.FC = () => {
@@ -9,11 +10,38 @@ const ContactSection: React.FC = () => {
         <div className="w-full md:w-1/2 p-10 md:p-16 bg-theme1-bg">
           <h3 className="text-sm uppercase tracking-wider font-sans font-medium mb-6 text-theme1-primary">CONTACT US</h3>
           <h2 className="text-3xl font-serif mb-8 text-theme1-primary">
-            Better yet, see us in person!
-          </h2>
-          <p className="text-theme1-secondary leading-relaxed font-sans mb-10">
-            We love our customers, so feel free to visit during normal business hours.
-          </p>
+  Better yet, see us in person!
+</h2>
+<p className="text-theme1-secondary leading-relaxed font-sans mb-4">
+  We love our customers, so feel free to visit during our business hours- 10:00 am- 6:00 pm.
+</p>
+<p className="text-theme1-secondary leading-relaxed font-sans mb-10 text-sm">
+  (Sundays closed)
+</p>
+ {/* Contact Numbers */}
+ <div className="mb-8">
+            <h4 className="text-lg font-serif mb-4 text-theme1-primary">Get in Touch</h4>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <Phone size={18} className="text-theme1-tertiary" />
+                <a 
+                  href="tel:+919810013545" 
+                  className="text-theme1-secondary hover:text-theme1-tertiary transition-colors font-sans"
+                >
+                  +91 9810013545
+                </a>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Phone size={18} className="text-theme1-tertiary" />
+                <a 
+                  href="tel:+919643727210" 
+                  className="text-theme1-secondary hover:text-theme1-tertiary transition-colors font-sans"
+                >
+                  +91 9643727210
+                </a>
+              </div>
+            </div>
+          </div>
           {/* WhatsApp Button */}
           <a
             href="https://wa.me/+919599213545"
@@ -29,21 +57,21 @@ const ContactSection: React.FC = () => {
           {/* Business Name and Address */}
           <div className="mb-6">
             <h3 className="text-2xl font-serif mb-4 text-theme1-primary">Sweetopiaa</h3>
-            <p className="text-theme1-secondary font-sans">B-234, Sector-46 Noida UP 201303</p>
+            <p className="text-theme1-secondary font-sans">Sector 46- Sweetopiaa, B-234, Gulmohar Avenue, sector-46, Noida, Gautam Buddha nagar, Uttar Pradesh-201303</p>
           </div>
           {/* Phone Number */}
-          <div>
+          {/* <div>
             <p className="text-theme1-secondary font-sans">
               <a href="tel:+919599213545" className="hover:text-theme1-tertiary transition-colors">
                 +91 9599213545
               </a>
             </p>
-          </div>
+          </div> */}
         </div>
-        {/* Right side - Map */}
+        {/* Right side - Map */} 
         <div className="w-full md:w-1/2 h-[500px] md:h-auto relative">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.7388957060247!2d77.3612!3d28.5575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDMzJzI2LjgiTiA3N8KwMjEnNDAuMyJF!5e0!3m2!1sen!2sin!4v1635784000000!5m2!1sen!2sin"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d876.1458213814883!2d77.35907566593558!3d28.55224258772243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce500427363a1%3A0xe270d8bdfebe2633!2sGulmohar%20avenue!5e0!3m2!1sen!2sin!4v1749975702160!5m2!1sen!2sin"
             width="100%"
             height="100%"
             style={{ border: 0 }}
@@ -51,10 +79,9 @@ const ContactSection: React.FC = () => {
             loading="lazy"
             className="absolute inset-0"
           ></iframe>
-          {/* Get Directions Button */}
-          <div className="absolute top-4 right-4 z-10">
+           <div className="absolute top-4 right-4 z-10">
             <a
-              href="https://www.google.com/maps/dir/?api=1&destination=28.5575,77.3612"
+              href="https://www.google.com/maps/dir/?api=1&destination=28.55229913178388, 77.35972744274977"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center bg-white border border-theme1-tertiary/20 py-2 px-4 rounded shadow hover:bg-theme1-bg/90 transition-colors"
@@ -65,7 +92,7 @@ const ContactSection: React.FC = () => {
               <span className="font-sans text-theme1-secondary tracking-wide">GET DIRECTIONS</span>
             </a>
           </div>
-        </div>
+        </div>  
       </div>
     </section>
   );

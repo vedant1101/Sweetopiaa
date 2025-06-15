@@ -7,7 +7,7 @@ import { CartProvider } from '@/context/cartContext';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Sweetopiaa - Natural Wellness',
+  title: 'Sweetopiaa - Sweetopiaa Cake Studio',
   description: 'Holistic approach to health and wellness',
 };
 

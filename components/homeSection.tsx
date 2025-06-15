@@ -59,8 +59,7 @@ const HomeSection: React.FC = () => {
               {/* Description */}
               <div className="max-w-xl">
                 <p className="text-xl text-theme1-tertiary/80 leading-relaxed">
-                  Discover our exquisite collection of handcrafted cakes, artisanal cookies, and premium desserts. 
-                  Each creation tells a story of quality, tradition, and pure sweetness.
+                Discover our exquisite and exclusive collection of handcrafted cakes, artisanal cookies and premium desserts. Each creation tells a story of high quality, taste and presentation
                 </p>
               </div>
 

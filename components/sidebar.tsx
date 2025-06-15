@@ -49,7 +49,7 @@ const Sidebar = () => {
       <div className="px-6 py-4 text-center border-b border-theme1-tertiary/20">
         <div className="mb-2">
         <Image
-  src="/images/brand_logo.png"
+  src="/images/brand_logo_new.png"
   alt="Sweetopiaa"
   width={128}
   height={128}
@@ -57,12 +57,12 @@ const Sidebar = () => {
   onError={(e) => (e.currentTarget.style.display = 'none')}
 />
         </div>
-        <h2 
-          className="font-serif italic text-xl cursor-pointer text-theme1-tertiary hover:text-theme1-primary transition-colors duration-300"
-          onClick={() => navigateTo('home')}
-        >
-          Sweetopiaa
-        </h2>
+        <h2
+  className="font-brownie italic text-xl cursor-pointer text-theme1-tertiary hover:text-theme1-primary transition-colors duration-300"
+  onClick={() => navigateTo('home')}
+>
+  Sweetopiaa
+</h2>
         <p className="text-xs text-theme1-tertiary/60 mt-1 font-serif">Artisanal Bakery</p>
       </div>
 
@@ -142,8 +142,9 @@ const Sidebar = () => {
 </blockquote>
           <div className="w-12 h-px bg-theme1-tertiary/30 mx-auto"></div>
           <p className="text-xs text-theme1-tertiary/50 font-sans">
-            Est. 2024 • Premium Quality
-          </p>
+  Est. 2012.<br />
+  A unit of Sweetopiaa Hospitality LLP
+</p>
         </div>
       </div>
     </div>
