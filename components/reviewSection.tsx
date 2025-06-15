@@ -48,7 +48,7 @@ const reviewsData: Review[] = [
     id: 3,
     title: "Disha Sukhija",
     text: "Whenever we have guests coming over, we order Tea Cakes, puffs, quiches and cheese straws from Sweetopiaa. They are always delivered freshly baked and delicious! All the guests enjoy them also. Good quality ingredients are used and the quality has also been consistent over the years. It always makes my parties a hit!",
-    author: "Jane Doe",
+    author: "Marketing Manager",
     location: "",
     date: "6/7/2023",
     stars: 5,

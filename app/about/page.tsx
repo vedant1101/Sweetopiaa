@@ -42,8 +42,8 @@ const AboutPage = () => {
         In college, I baked cakes for friends, exchanging them for treats from our St. Stephen&apos;s college Dhaba. But it was my son&apos;s love for fondant superhero cakes that turned this casual hobby into a serious pursuit.
       </p>
       <p className="text-theme1-secondary leading-relaxed font-sans mb-4">
-        Soon the aromas from my tiny kitchen reached friends and acquaintances. As Julia Child famously said, &ldquo;A Party without a Cake, is Just a meeting.&rdquo; Before I knew it, I had become a full-time baker.
-      </p>
+  Soon the aromas from my tiny kitchen reached friends and acquaintances. As Julia Child famously said, &ldquo;A Party without a Cake, is Just a meeting.&rdquo; I ensured that none of the parties I attended hence were without a cake from Sweetopiaa! Before I knew it, I had become a full-time baker.
+</p>
       <p className="text-theme1-secondary leading-relaxed font-sans mb-4">
         Baking ignites my creativity. It&apos;s about crafting those special moments when the world pauses, you float in the clouds, and stop counting calories! Nothing brings me more joy than seeing people celebrate with a Sweetopia cake.
       </p>
